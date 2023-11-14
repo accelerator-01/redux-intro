@@ -17,11 +17,14 @@ function AccountOperations() {
     isLoading,
   } = useSelector((store) => store.account);
 
+  console.log(balance);
+
   function handleDeposit() {
     if (!depositAmount) return;
+
     dispatch(deposit(depositAmount, currency));
     setDepositAmount("");
-    setCurrency("");
+    setCurrency("USD");
   }
 
   function handleWithdrawal() {
@@ -33,15 +36,13 @@ function AccountOperations() {
   function handleRequestLoan() {
     if (!loanAmount || !loanPurpose) return;
     dispatch(requestLoan(loanAmount, loanPurpose));
-    setLoanPurpose("");
     setLoanAmount("");
+    setLoanPurpose("");
   }
 
   function handlePayLoan() {
     dispatch(payLoan());
   }
-
-  console.log(balance);
 
   return (
     <div>
@@ -99,8 +100,7 @@ function AccountOperations() {
         {currentLoan > 0 && (
           <div>
             <span>
-              Pay back ${currentLoan}
-              {{ currentLoanPurpose }}
+              Pay back ${currentLoan} ({currentLoanPurpose})
             </span>
             <button onClick={handlePayLoan}>Pay loan</button>
           </div>
